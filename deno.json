@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-read --allow-write --watch src/main.ts",
+    "compile": "deno compile --allow-read --allow-write -o secrets-util src/main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1"
+  }
+}

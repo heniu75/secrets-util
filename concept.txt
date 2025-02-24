@@ -1,0 +1,23 @@
+The following is a specification for a secrets-util console application.
+
+The console application is to be written in typescript, and to be run using the deno 2.2.
+The console will be compiled into an executable using deno compile.
+
+The console application will take a single optional file path parameter. This will point to a secrets-util.json file. If an argument is not provided it will attempt to locate and read a secrets-util.json file from the folder from which the console is executed from (not where the console application resides)
+
+The secrets-util.json file will have the following json properties defined:
+- incFiles - string array of files to consider using wildcards. By default this will include *.has-secret files
+- recurse - boolean flag indicating whether to recurse or not
+- replace - a dictionary of key-value pairs which indicate the case sensitive strings to search for and the value to replace it with
+
+Processing - the tool would be invoked with a path to a secrets-util.json file. If one is not given, the tool will attempt to locate a secrets-util.json file in the folder from which the secrets-util console app is invoked from. This folder will be known as the working directory. If a secrets-util.json is not found within the working directory, then a console error will be raised to the user. 
+If the secrets-util.json file does exist, then the file will be parsed as configuration. 
+The console app will then begin looking for files in the designated folder and possibly subfolders, bases on the recurse flag, to process. Files matching any strings inside the 'incFiles' files wildcard specifications will be processed.
+When a file is processed, any text occurencees inside the file of any of the keys defined inside the 'replace' dictionary keys, will be replaced with the corresponding value inside the dictionary entries.
+Note that inside the file, these occurences will be delimited. E.g. if we have a key inside the 'replace' dictionary as follows "port": "3000", then if the file being processed has a text placeholder of "!{port}", then inside the file where that text was found, it will be replaced with 3000
+
+Write me the program and ask me any clarifying questions where appropriate
+
+Rename the 'incFiles' references to be 'include'
+
+Change the behaviour such that the original file is not overwritten. But rather write to a new file path, but without the the '.has-secret' extension. E.g. if the file is named .env.has-secret then the processed file will be named .env. If that file already exists, then the tool should overwrite it.
