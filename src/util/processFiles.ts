@@ -1,7 +1,8 @@
 import { walk } from "jsr:@std/fs/walk";
 import { wildcardToRegExp } from "./wildcardToRegExp.ts";
-import { SecretsUtilConfig } from "./SecretsUtilConfig.ts";
+import { SecretsUtilConfig } from "../models/SecretsUtilConfig.ts";
 import { processFile } from "./processFile.ts";
+import { logger } from "./logger.ts";
 
 export async function processFiles(config: SecretsUtilConfig) {
   const filesToProcess: string[] = [];
@@ -21,5 +22,6 @@ export async function processFiles(config: SecretsUtilConfig) {
 
   const now = new Date();
   const timeString = now.toTimeString().split(' ')[0]; // Get the time part (HH:MM:SS)
-  console.log(`${timeString} Processing complete.`);
+  
+  logger.log(`${timeString} Processing complete.`);
 }
